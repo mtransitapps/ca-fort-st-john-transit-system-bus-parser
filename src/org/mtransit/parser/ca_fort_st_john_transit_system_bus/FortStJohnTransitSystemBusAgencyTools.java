@@ -80,9 +80,6 @@ public class FortStJohnTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public boolean excludeTrip(GTrip gTrip) {
-		if (INCLUDE_ONLY_SERVICE_ID_CONTAINS != null && !gTrip.getServiceId().contains(INCLUDE_ONLY_SERVICE_ID_CONTAINS)) {
-			return true;
-		}
 		if (this.serviceIds != null) {
 			return excludeUselessTrip(gTrip, this.serviceIds);
 		}
@@ -183,6 +180,40 @@ public class FortStJohnTransitSystemBusAgencyTools extends DefaultAgencyTools {
 								"198069", // Southbound Old Fort Rd at Alaska Rd S
 								"198072", // ++
 								"198009", // 100 Ave @ 96 St
+						})) //
+				.compileBothTripSort());
+		map2.put(4L, new RouteTripSpec(4L, //
+				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), // Southeast
+				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) // DOWNTOWN
+				.addTripSort(MDirectionType.EAST.intValue(), //
+						Arrays.asList(new String[] { //
+						"198001", // Southbound 100 St at 100 Av
+								"198059", // ++
+								"198051", // Northbound 76 St at 89 Ave
+						})) //
+				.addTripSort(MDirectionType.WEST.intValue(), //
+						Arrays.asList(new String[] { //
+						"198051", // Northbound 76 St at 89 Ave
+								"198042", // ++
+								"198001", // Southbound 100 St at 100 Ave
+						})) //
+				.compileBothTripSort());
+		map2.put(5L, new RouteTripSpec(5L, //
+				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.NORTH.getId(), // North Loop
+				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.SOUTH.getId()) // South Loop
+				.addTripSort(MDirectionType.NORTH.intValue(), //
+						Arrays.asList(new String[] { //
+						"198037", // Westbound 100 Ave at 96 St #S
+								"198033", // Southbound 106 St at 104 Ave #N
+								"198001", // Southbound 100 St at 100 Ave #E
+						})) //
+				.addTripSort(MDirectionType.SOUTH.intValue(), //
+						Arrays.asList(new String[] { //
+						"198001", // Southbound 100 St at 100 Ave #E
+								"598000", // Southbound 108th at Alaska Hwy #D
+								"198042", // Westbound 93 Ave at 86 St #T
+								"198009", // Westbound 100 Ave at 96 St #S
+								"198037", // Westbound 100 Ave at 96 St #S
 						})) //
 				.compileBothTripSort());
 		ALL_ROUTE_TRIPS2 = map2;
