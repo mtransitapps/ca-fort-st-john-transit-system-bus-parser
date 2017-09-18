@@ -72,6 +72,9 @@ public class FortStJohnTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public boolean excludeRoute(GRoute gRoute) {
+		if (StringUtils.isEmpty(gRoute.getAgencyId())) {
+			return false; // no agency to discriminate
+		}
 		if (!INCLUDE_AGENCY_ID.equals(gRoute.getAgencyId())) {
 			return true;
 		}
