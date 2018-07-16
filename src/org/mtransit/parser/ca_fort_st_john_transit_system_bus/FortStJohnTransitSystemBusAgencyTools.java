@@ -53,6 +53,11 @@ public class FortStJohnTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	}
 
 	@Override
+	public boolean excludingAll() {
+		return this.serviceIds != null && this.serviceIds.isEmpty();
+	}
+
+	@Override
 	public boolean excludeCalendar(GCalendar gCalendar) {
 		if (this.serviceIds != null) {
 			return excludeUselessCalendar(gCalendar, this.serviceIds);
@@ -100,7 +105,6 @@ public class FortStJohnTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	}
 
 	private static final String AGENCY_COLOR_GREEN = "34B233";// GREEN (from PDF Corporate Graphic Standards)
-	@SuppressWarnings("unused")
 	private static final String AGENCY_COLOR_BLUE = "002C77"; // BLUE (from PDF Corporate Graphic Standards)
 
 	private static final String AGENCY_COLOR = AGENCY_COLOR_GREEN;
@@ -124,7 +128,7 @@ public class FortStJohnTransitSystemBusAgencyTools extends DefaultAgencyTools {
 			// @formatter:on
 			}
 			if (isGoodEnoughAccepted()) {
-				return null;
+				return AGENCY_COLOR_BLUE;
 			}
 			System.out.printf("\nUnexpected route color for %s!\n", gRoute);
 			System.exit(-1);
@@ -225,7 +229,7 @@ public class FortStJohnTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	@Override
 	public int compareEarly(long routeId, List<MTripStop> list1, List<MTripStop> list2, MTripStop ts1, MTripStop ts2, GStop ts1GStop, GStop ts2GStop) {
 		if (ALL_ROUTE_TRIPS2.containsKey(routeId)) {
-			return ALL_ROUTE_TRIPS2.get(routeId).compare(routeId, list1, list2, ts1, ts2, ts1GStop, ts2GStop);
+			return ALL_ROUTE_TRIPS2.get(routeId).compare(routeId, list1, list2, ts1, ts2, ts1GStop, ts2GStop, this);
 		}
 		return super.compareEarly(routeId, list1, list2, ts1, ts2, ts1GStop, ts2GStop);
 	}
@@ -241,7 +245,7 @@ public class FortStJohnTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	@Override
 	public Pair<Long[], Integer[]> splitTripStop(MRoute mRoute, GTrip gTrip, GTripStop gTripStop, ArrayList<MTrip> splitTrips, GSpec routeGTFS) {
 		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
-			return SplitUtils.splitTripStop(mRoute, gTrip, gTripStop, routeGTFS, ALL_ROUTE_TRIPS2.get(mRoute.getId()));
+			return SplitUtils.splitTripStop(mRoute, gTrip, gTripStop, routeGTFS, ALL_ROUTE_TRIPS2.get(mRoute.getId()), this);
 		}
 		return super.splitTripStop(mRoute, gTrip, gTripStop, splitTrips, routeGTFS);
 	}
