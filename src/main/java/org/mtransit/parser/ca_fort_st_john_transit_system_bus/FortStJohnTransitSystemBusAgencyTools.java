@@ -15,7 +15,6 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 // https://www.bctransit.com/open-data
-// https://www.bctransit.com/data/gtfs/fort-st-john.zip
 public class FortStJohnTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	public static void main(@NotNull String[] args) {
@@ -33,14 +32,6 @@ public class FortStJohnTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		return "Fort St. John TS";
 	}
 
-	private static final String AGENCY_ID = "25"; // Fort St. John Transit System only
-
-	@Nullable
-	@Override
-	public String getAgencyId() {
-		return AGENCY_ID;
-	}
-
 	@NotNull
 	@Override
 	public Integer getAgencyRouteType() {
@@ -54,7 +45,12 @@ public class FortStJohnTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public boolean useRouteShortNameForRouteId() {
-		return true;
+		return false; // route ID used by GTFS RT
+	}
+
+	@Override
+	public @Nullable String getRouteIdCleanupRegex() {
+		return "\\-[A-Z]+$";
 	}
 
 	@Override
